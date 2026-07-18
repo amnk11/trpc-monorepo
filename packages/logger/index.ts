@@ -3,6 +3,7 @@ import { env } from "./env";
 
 type LoggerLevel = "error" | "info" | "debug";
 
+// this is comment
 const level: LoggerLevel =
   env.LOGGER_LEVEL ?? (env.NODE_ENV === "development" ? "debug" : "error");
 
