@@ -19,19 +19,19 @@ type SignupFormData = {
 };
 
 export function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
-  const {createUserWithEmailAndPasswordAsync} = useSignup()
+  const { createUserWithEmailAndPasswordAsync } = useSignup();
 
   const { register, handleSubmit } = useForm<SignupFormData>();
 
   const onSubmit = async (data: SignupFormData) => {
     console.log("All form values:", data);
-   const {id} = await createUserWithEmailAndPasswordAsync({
+    const { id } = await createUserWithEmailAndPasswordAsync({
       email: data.email,
       fullName: data.name,
       password: data.password,
     });
 
-    console.log("User ID: ",id)
+    console.log("User ID: ", id);
   };
 
   return (
