@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
   Field,
   FieldDescription,
@@ -19,6 +20,7 @@ type SignupFormData = {
 };
 
 export function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
+  const router = useRouter();
   const { createUserWithEmailAndPasswordAsync } = useSignup();
 
   const { register, handleSubmit } = useForm<SignupFormData>();
@@ -32,6 +34,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"form">
     });
 
     console.log("User ID: ", id);
+    router.replace("/login");
   };
 
   return (

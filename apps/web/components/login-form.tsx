@@ -2,6 +2,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
+import { useRouter } from "next/navigation";
 import {
   Field,
   FieldDescription,
@@ -20,6 +21,7 @@ type LoginFormValues = {
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const { register, handleSubmit } = useForm<LoginFormValues>();
   const { signInUserWithEmailAndPasswordAsync } = useSignIn();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     console.log(data);
@@ -28,6 +30,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       password: data.password,
     });
     console.log("User ID", id);
+    router.replace("/dashboard");
   };
 
   return (
