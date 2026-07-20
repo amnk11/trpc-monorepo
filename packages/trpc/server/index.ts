@@ -4,7 +4,7 @@ import { formRouter } from "./routes/form/route";
 
 export const serverRouter = router({
   auth: authRouter,
-  from: formRouter,
+  form: formRouter,
 });
 
 export { createContext } from "./context";
