@@ -1,9 +1,4 @@
-import {
-  pgTable,
-  uuid,
-  timestamp,
-  json
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, timestamp, json } from "drizzle-orm/pg-core";
 import { formsTable } from "./form";
 
 export interface FormSubmissionValue {
@@ -14,10 +9,10 @@ export interface FormSubmissionValue {
 export type FormSubmissionValuesRow = FormSubmissionValue[];
 
 export const formSubmissionTable = pgTable("form_submissions", {
-
+  id: uuid("id").primaryKey().defaultRandom(),
   formId: uuid("form_id").references(() => formsTable.id),
 
-  values: json('values').$type<FormSubmissionValuesRow>(),
+  values: json("values").$type<FormSubmissionValuesRow>(),
 
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
