@@ -1,8 +1,10 @@
 import { publicProcedure, router } from "./trpc";
 import { authRouter } from "./routes/auth/route";
+import { formRouter } from "./routes/form/route";
 
 export const serverRouter = router({
   auth: authRouter,
+  from: formRouter,
 });
 
 export { createContext } from "./context";
