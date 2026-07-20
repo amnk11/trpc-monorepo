@@ -66,12 +66,12 @@ export const authRouter = router({
         method: "GET",
         path: getPath("/getLoggedInUserInfo"),
         tags: TAGS,
+        protect: true,
       },
     })
     .input(getLoggedInUserInfoInputModel)
     .output(getLoggedInUserInfoOutPutModel)
     .query(async ({ ctx }) => {
-
       const { fullname, email, id, profileImageUrl } = await userService.getUserInfoById(
         ctx.user.id,
       );
