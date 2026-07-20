@@ -74,3 +74,18 @@ export const getFieldsInputModel = z.object({
 });
 
 export const getFieldsOutputModel = z.array(formFieldObject);
+
+export const getFormInputModel = z.object({
+  formId: z.string().uuid().describe("UUID of the form"),
+});
+
+export const getFormOutputModel = z
+  .object({
+    id: z.string(),
+    title: z.string(),
+    description: z.string().nullable().optional(),
+    createdAt: z.date().nullable(),
+    updatedAt: z.date().nullable(),
+    fields: z.array(formFieldObject),
+  })
+  .nullable();

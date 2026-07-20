@@ -14,6 +14,8 @@ import {
   deleteFieldOutputModel,
   getFieldsInputModel,
   getFieldsOutputModel,
+  getFormInputModel,
+  getFormOutputModel,
 } from "./model";
 
 const TAGS = ["Form"];
@@ -117,5 +119,19 @@ export const formRouter = router({
     .output(deleteFieldOutputModel)
     .mutation(async ({ input }) => {
       return formFieldService.deleteField(input);
+    }),
+
+  getForm: publicProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: getPath("/getForm"),
+        tags: TAGS,
+      },
+    })
+    .input(getFormInputModel)
+    .output(getFormOutputModel)
+    .query(async ({ input }) => {
+      return formService.getFormById({ formId: input.formId });
     }),
 });

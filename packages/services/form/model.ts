@@ -14,8 +14,8 @@ export const listFormsByUserIdInput = z.object({
 
 export type ListFormsByUserIdInputType = z.infer<typeof listFormsByUserIdInput>;
 
-// export const getFormByIdInput = z.object({
-//     formId: z.string().uuid().describe('UUID of the form'),
-// })
+export const getFormByIdInput = z.object({
+    formId: z.string().uuid().describe('UUID of the form'),
+})
 
-// export type GetFormByIdInputType = z.infer<typeof getFormByIdInput>
+export type GetFormByIdInputType = z.infer<typeof getFormByIdInput>
