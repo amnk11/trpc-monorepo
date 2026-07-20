@@ -29,6 +29,13 @@
       "when": 1784481947358,
       "tag": "0003_magical_sage",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1784568654518,
+      "tag": "0004_woozy_pride",
+      "breakpoints": true
     }
   ]
 }
