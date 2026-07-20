@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import Link from "next/link";
+import { PencilIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -13,8 +15,15 @@ import {
 import { Field, FieldGroup, FieldLabel } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-
-import { useCreateForm } from "~/hooks/api/form";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
+import { useCreateForm, useListForms } from "~/hooks/api/form";
 
 type CreateFormValues = {
   title: string;
@@ -24,6 +33,7 @@ type CreateFormValues = {
 export default function FormsPage() {
   const [open, setOpen] = useState(false);
   const { createFormAsync, isError, error } = useCreateForm();
+  const { forms, isLoading } = useListForms();
 
   const {
     register,
@@ -48,6 +58,53 @@ export default function FormsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Forms</h1>
         <Button onClick={() => setOpen(true)}>Create Form</Button>
+      </div>
+
+      <div className="rounded-lg border overflow-hidden">
+        <Table>
+          <TableHeader className="bg-muted">
+            <TableRow>
+              <TableHead>Title</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Created</TableHead>
+              <TableHead className="w-16" />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
+                  Loading...
+                </TableCell>
+              </TableRow>
+            ) : !forms || forms.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
+                  No forms yet. Create your first one.
+                </TableCell>
+              </TableRow>
+            ) : (
+              // @ts-expect-error -- Fix tRPC type inference
+              forms.map((form) => (
+                <TableRow key={form.id}>
+                  <TableCell className="font-medium">{form.title}</TableCell>
+                  <TableCell className="text-muted-foreground">{form.description ?? "—"}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm">
+                    {form.createdAt ? new Date(form.createdAt).toLocaleDateString() : "—"}
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="ghost" size="icon" asChild>
+                      <Link href={`/dashboard/forms/${form.id}`}>
+                        <PencilIcon className="size-4" />
+                        <span className="sr-only">Edit {form.title}</span>
+                      </Link>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
